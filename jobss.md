@@ -1,4 +1,6 @@
-# Applications 
+# Applications
+
+            https://www.youtube.com/watch?v=5BhFF7K9ofw
     . Put all Images in Resource/Images
     .Setup the Layouts called components 
         resources/views/components/layout.blade.php
