@@ -7,6 +7,9 @@
             {{--                <input type="text" placeholder="PHP Developer ..."--}}
             {{--                       class="rounded-xl bg-white/5  border-white/10 px-5 py-4 w-full max-w-xl">--}}
             {{--            </form>--}}
+            <x-forms.form action="/search" class="mt-6">
+                <x-forms.input :label="false" name="q" placeholder="Web Developer"/>
+            </x-forms.form>
 
         </section>
 
@@ -32,11 +35,11 @@
 
         <section>
             <x-section-heading>Recent Jobs</x-section-heading>
+
             <div class="mt-6 space-y-6">
                 @foreach($jobs as $job)
                     <x-job-card-wide :$job/>
                 @endforeach
-
             </div>
         </section>
     </div>
