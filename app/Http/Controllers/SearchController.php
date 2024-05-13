@@ -12,6 +12,5 @@ class SearchController extends Controller
         $jobs = Job::where('title', 'LIKE', '%'.request('q').'%')->get();
 
         return view('search', compact('jobs'));
-
     }
 }
