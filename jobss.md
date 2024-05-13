@@ -1,4 +1,4 @@
-# Applications
+# Applications  Pa$$w0rd!
 
             https://www.youtube.com/watch?v=5BhFF7K9ofw
     . Put all Images in Resource/Images
@@ -43,3 +43,15 @@
         database/migrations/2024_05_08_093401_create_job_tag_table.php
         resources/views/jobs/
         tests/Unit/
+
+# CRUD AUTHENTICATION
+
+    modified:   resources/views/components/layout.blade.php
+	modified:   routes/web.php
+
+
+    app/Http/Controllers/RegisterUserController.php
+	app/Http/Controllers/SessionController.php
+	resources/views/auth/
+	resources/views/components/forms/
+	resources/views/components/page-heading.blade.php
