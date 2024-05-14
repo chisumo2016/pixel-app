@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Models\Job;
 use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class JobController extends Controller
 {
@@ -14,15 +17,46 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all()->groupBy('featured');
+        $jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
 
         //return $jobs;
 
         return view('jobs.index', [
-            'featuredJobs' => $jobs[0],
-            'jobs' => $jobs[1],
+            'jobs' => $jobs[0],
+            'featuredJobs' => $jobs[1],
             'tags' => Tag::all(),
         ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //dd($request->all());
+        $attributes = $request->validate([
+            'title' => ['required'],
+            'salary' => ['required'],
+            'location' => ['required'],
+            'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])], //set as enum
+            'url' => ['required', 'active_url'],
+            'tags' => ['nullable'],
+        ]);
+
+        $attributes['featured'] = $request->has('featured');  //true or false
+
+        $job = Auth::user()->employer->jobs()->create(Arr::except($attributes,
+            'tags')); //employer_i d will be set in the process
+
+        //create tags
+        if ($attributes['tags'] ?? false) {
+            //explode(',', $attributes['tags']); //turn into array laaravel. backends
+            foreach (explode(',', $attributes['tags']) as $tag) {
+                $job->tag($tag);
+            }
+        }
+
+        return redirect()->route('jobs.index');
     }
 
     /**
@@ -30,15 +64,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreJobRequest $request)
-    {
-        //
+        return view('jobs.create');
     }
 
     /**
