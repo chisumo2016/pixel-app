@@ -55,3 +55,6 @@
 	resources/views/auth/
 	resources/views/components/forms/
 	resources/views/components/page-heading.blade.php
+
+
+    node_modules/.bin/prettier resources/js/Components/Test.vue --write  

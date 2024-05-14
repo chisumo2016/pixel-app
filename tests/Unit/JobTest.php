@@ -26,3 +26,7 @@ it('can have tags', function () {
 
     expect($job->tags)->toHaveCount(1);
 });
+
+it('', function () {
+
+});
